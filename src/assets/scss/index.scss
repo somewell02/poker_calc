@@ -1,0 +1,17 @@
+@import "./normilize";
+@import "./theme";
+@import "./breakpoints";
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: inherit;
+}
+
+textarea {
+  resize: none;
+}

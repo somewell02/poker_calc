@@ -1,0 +1,61 @@
+:root {
+    --primary-color: #345093;
+    --primary-light-color: #d9e1ed;
+    --text-primary-color: #ffffff;
+    --secondary-color: #bababa;
+    --border-color: #dadada;
+    --input-color: #dadada;
+    --text-color: #404040;
+    --background-color: #F2F6F7;
+    --background--text-color: #ffffff;
+    --hover-color: #F9F9F9;
+    --error-color: #920000;
+    --success-color: #84c000;
+}
+
+.dark-theme {
+    --primary-color: red;
+}
+
+html {
+  font-family: "Montserrat", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background: var(--background-color);
+}
+
+p, div {
+    color: var(--text-color);
+}
+
+p {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    color: var(--text-color);
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    @include media-xl {
+        width: auto;
+        margin: 0 40px;
+    }
+    @include media-xs {
+        margin: 0 20px;
+    }
+}
