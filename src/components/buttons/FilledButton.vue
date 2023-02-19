@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang="ts">
-export interface Props {
+export interface propsInterface {
   color?: "primary" | "primary-light" | "secondary";
 }
 
-withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<propsInterface>(), {
   color: "primary",
 });
 </script>

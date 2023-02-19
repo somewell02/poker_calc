@@ -1,11 +1,13 @@
 <template>
-  <div class="home">Poker</div>
+  <div class="home">
+    <bordered-select v-model="select" :options="options" />
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
+import BorderedSelect from "@/components/dropdowns/BorderedSelect.vue";
 
-export default defineComponent({
-  name: "HomeView",
-});
+const select = ref("");
+const options = [{ id: "1", title: "one" }, { id: "2" }];
 </script>
