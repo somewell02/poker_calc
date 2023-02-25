@@ -53,9 +53,12 @@ const isActive = ref(false);
 
 const selectedTitle = computed(() => {
   if (props.modelValue && props.options) {
-    return props.options.find(
+    const selectedItem = props.options.find(
       (option: optionInterface) => option.id === props.modelValue
-    ).title;
+    );
+    return selectedItem
+      ? selectedItem.title ?? selectedItem.id
+      : props.defaultTitle;
   } else {
     return props.defaultTitle;
   }

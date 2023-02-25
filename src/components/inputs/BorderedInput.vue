@@ -3,8 +3,10 @@
 </template>
 
 <script setup lang="ts">
+import { inputColors } from "@/types/colors";
+
 export interface propsInterface {
-  color?: "gray" | "primary";
+  color?: inputColors;
 }
 
 withDefaults(defineProps<propsInterface>(), {

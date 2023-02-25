@@ -5,8 +5,10 @@
 </template>
 
 <script setup lang="ts">
+import { filledButtonColors } from "@/types/colors";
+
 export interface propsInterface {
-  color?: "primary" | "primary-light" | "secondary";
+  color?: filledButtonColors;
 }
 
 withDefaults(defineProps<propsInterface>(), {

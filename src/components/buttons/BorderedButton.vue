@@ -5,8 +5,10 @@
 </template>
 
 <script setup lang="ts">
+import { borderedButtonColors } from "@/types/colors";
+
 export interface propsInterface {
-  color?: "primary" | "gray";
+  color?: borderedButtonColors;
 }
 
 withDefaults(defineProps<propsInterface>(), {
