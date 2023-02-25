@@ -14,10 +14,12 @@
 
 <script setup lang="ts">
 import CloseIcon from "@/components/icons/CloseIcon.vue";
+
 import { ref, watch } from "vue";
+import { alertTypes } from "@/types/colors";
 
 export interface propsInterface {
-  type?: string;
+  type?: alertTypes;
   duration?: number;
 }
 
@@ -28,9 +30,9 @@ const props = withDefaults(defineProps<propsInterface>(), {
 
 const isShow = ref<boolean>(false);
 const text = ref<string>("");
-const type = ref<string>("");
+const type = ref<alertTypes>("information");
 
-const open = (curText?: string, curType?: string): void => {
+const open = (curText?: string, curType?: alertTypes): void => {
   type.value = curType ?? props.type;
   text.value = curText ?? "";
   isShow.value = true;
