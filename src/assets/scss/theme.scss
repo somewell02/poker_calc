@@ -27,14 +27,11 @@ body {
     background: var(--background-color);
 }
 
-p, div {
-    color: var(--text-color);
-}
-
 p {
     margin: 0 0 10px 0;
     font-size: 16px;
     line-height: 1.5;
+    color: var(--text-color);
 }
 
 h1, h2, h3, h4, h5, h6 {
