@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { useMainStore } from "@/store/main-store";
+import { useMainStore } from "@/store/mainStore";
 import { storeToRefs } from "pinia";
 
 const mainStore = storeToRefs(useMainStore());
