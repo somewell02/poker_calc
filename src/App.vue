@@ -1,5 +1,12 @@
 <template>
-  <router-view />
+  <div class="app-wrap">
+    <preloader-spinner />
+    <main>
+      <router-view />
+    </main>
+  </div>
 </template>
 
-<style lang="scss"></style>
+<script setup lang="ts">
+import PreloaderSpinner from "@/components/popups/PreloaderSpinner.vue";
+</script>
