@@ -1,5 +1,5 @@
 <template>
-  <button :class="color">
+  <button :class="[color, { full: isFull }]">
     <slot />
   </button>
 </template>
@@ -9,10 +9,12 @@ import { filledButtonColors } from "@/types/colors";
 
 export interface propsInterface {
   color?: filledButtonColors;
+  isFull?: boolean;
 }
 
 withDefaults(defineProps<propsInterface>(), {
   color: "primary",
+  isFull: false,
 });
 </script>
 
@@ -26,6 +28,9 @@ button {
   margin: 0;
   border-radius: 5px;
   min-width: 120px;
+  &.full {
+    width: 100%;
+  }
   &.primary {
     background: var(--primary-color);
     color: white;

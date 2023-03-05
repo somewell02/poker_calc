@@ -1,5 +1,13 @@
 <template>
-  <input :class="color" />
+  <input
+    :class="[
+      color,
+      {
+        validated: valid === true,
+        failed: valid === false,
+      },
+    ]"
+  />
 </template>
 
 <script setup lang="ts">
@@ -7,10 +15,12 @@ import { inputColors } from "@/types/colors";
 
 export interface propsInterface {
   color?: inputColors;
+  valid?: boolean | null;
 }
 
 withDefaults(defineProps<propsInterface>(), {
   color: "gray",
+  valid: null,
 });
 </script>
 
@@ -23,27 +33,26 @@ input {
   outline: none;
   border-radius: 3px;
   font-size: 14px;
+  border: 1px solid;
+  color: var(--text-color);
   &.gray {
-    color: var(--text-color);
-    border: 1px solid var(--input-color);
-    &:focus {
-      border: 2px solid var(--input-color);
-      padding: 0 19px;
-    }
-    &::placeholder {
-      color: var(--secondary-color);
-    }
+    border-color: var(--input-color);
   }
   &.primary {
-    color: var(--text-color);
-    border: 1px solid var(--primary-color);
-    &:focus {
-      border: 2px solid var(--primary-color);
-      padding: 0 19px;
-    }
-    &::placeholder {
-      color: var(--secondary-color);
-    }
+    border-color: var(--primary-color);
+  }
+  &.validated {
+    border-color: var(--success-color);
+  }
+  &.failed {
+    border-color: var(--error-color);
+  }
+  &:focus {
+    border-width: 2px;
+    padding: 0 19px;
+  }
+  &::placeholder {
+    color: var(--secondary-color);
   }
 }
 </style>
