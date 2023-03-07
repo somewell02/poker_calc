@@ -1,4 +1,4 @@
-import { ref, reactive, watch, computed, Ref, ComputedRef } from "vue";
+import { ref, reactive, computed, Ref, ComputedRef } from "vue";
 
 interface initField {
   value: string;
@@ -6,8 +6,9 @@ interface initField {
 }
 
 interface field {
-  valid: Ref<boolean>;
   value: Ref<string>;
+  valid: ComputedRef<boolean>;
+  inputValid: ComputedRef<boolean | null>;
   errors: Record<string, boolean>;
 }
 
@@ -21,18 +22,22 @@ export const useForm = (init: Record<string, initField>): form => {
   const fields = reactive<Record<string, field>>({});
   const submitted = ref<boolean>(false);
 
-  const valid = computed<boolean>(() =>
-    Object.keys(fields).reduce(
-      (res: boolean, key: string): boolean => res && fields[key].valid.value,
+  const valid = computed<boolean>(() => {
+    return Object.keys(fields).reduce(
+      (res: boolean, key: string) => res && !!fields[key].valid,
       true
-    )
-  );
+    );
+  });
 
   for (const key of Object.keys(init)) {
-    fields[key] = useField({
+    const field = useField({
       value: init[key].value,
       validators: init[key].validators,
     });
+    field.inputValid = computed(() =>
+      submitted.value && !field.valid.value ? false : null
+    );
+    fields[key] = field;
   }
 
   return {
@@ -43,25 +48,24 @@ export const useForm = (init: Record<string, initField>): form => {
 };
 
 export const useField = (field: initField): field => {
-  const valid = ref<boolean>(true);
   const value = ref<string>(field.value);
   const errors = reactive<Record<string, boolean>>({});
 
-  const reassign = (val: string) => {
-    valid.value = true;
-    for (const [key, validate] of Object.entries(field.validators ?? {})) {
-      const isValid = validate(val);
+  const valid = computed<boolean>(() => {
+    const validators = Object.entries(field.validators ?? {});
+    return validators.reduce((res: boolean, [key, validate]) => {
+      const isValid = validate(value.value);
       errors[key] = !isValid;
-      if (!isValid) valid.value = false;
-    }
-  };
+      return res && isValid;
+    }, true);
+  });
 
-  watch(value, reassign);
-  reassign(value.value);
+  const inputValid = computed(() => null);
 
   return {
     value,
     valid,
+    inputValid,
     errors,
   };
 };

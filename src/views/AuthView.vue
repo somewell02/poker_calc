@@ -5,7 +5,7 @@
       <div class="auth-form">
         <text-input
           v-model="authForm.fields.login.value"
-          :valid="authForm.submitted ? authForm.fields.login.valid.value : null"
+          :valid="authForm.fields.login.inputValid ?? null"
           name="login"
           id="login"
           placeholder="Login"
@@ -35,8 +35,7 @@ const authForm = useForm({
 
 const auth = () => {
   authForm.submitted.value = true;
-  if (!authForm.valid) return;
-  console.log("auth");
+  console.log(authForm.valid.value);
 };
 </script>
 
