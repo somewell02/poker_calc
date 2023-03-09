@@ -57,8 +57,7 @@ a {
 }
 
 .bordered-div {
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
+  @include bordered;
   padding: 60px;
   @include media-sm {
     padding: 60px 30px;

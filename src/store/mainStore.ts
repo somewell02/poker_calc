@@ -9,9 +9,14 @@ export const useMainStore = defineStore("main-store", () => {
     isLoading.value = loading;
   };
 
-  const initData = async (): Promise<void> => {
-    const chipsStore = useChipsStore();
-    await chipsStore.loadChips();
+  const initData = async (options: string[] = []): Promise<void> => {
+    isLoading.value = true;
+
+    if (options.includes("chips")) {
+      const chipsStore = useChipsStore();
+      await chipsStore.loadChips();
+    }
+
     isLoading.value = false;
   };
 

@@ -9,8 +9,4 @@
 
 <script setup lang="ts">
 import PreloaderSpinner from "@/components/popups/PreloaderSpinner.vue";
-import { useMainStore } from "@/store/mainStore";
-
-const mainStore = useMainStore();
-mainStore.initData();
 </script>

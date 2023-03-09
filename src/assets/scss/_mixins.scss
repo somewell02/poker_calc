@@ -10,6 +10,11 @@
   justify-content: space-between;
 }
 
+@mixin bordered {
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+}
+
 @mixin custom-scroll(
   $track-color: var(--border-color),
   $thumb-color: var(--secondary-color),

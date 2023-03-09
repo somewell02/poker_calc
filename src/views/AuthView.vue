@@ -21,7 +21,15 @@
 import MessageAlert from "@/components/popups/MessageAlert.vue";
 import FilledButton from "@/components/buttons/FilledButton.vue";
 import TextInput from "@/components/inputs/TextInput.vue";
+
 import { useForm } from "@/use/form";
+import { useMainStore } from "@/store/mainStore";
+import { useRouter } from "vue-router";
+
+const mainStore = useMainStore();
+mainStore.initData();
+
+const router = useRouter();
 
 const required = (val: string) => !!val;
 const maxLength = (num: number) => (val: string) => val.length <= num;
@@ -35,7 +43,7 @@ const authForm = useForm({
 
 const auth = () => {
   authForm.submitted.value = true;
-  console.log(authForm.valid.value);
+  router.push({ name: "home" });
 };
 </script>
 
