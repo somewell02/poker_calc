@@ -2,8 +2,8 @@
   <div :class="['chips-set-card', { bordered: isBordered }]">
     <chip-card
       v-for="chip in chips"
-      :key="chip.id"
-      :chip="getChip(chip.id)"
+      :key="chip.color"
+      :chip="getChip(chip.color)"
       :quantity="chip.quantity"
       :price="chip.price"
     />
@@ -13,15 +13,10 @@
 <script setup lang="ts">
 import ChipCard from "@/components/cards/ChipCard.vue";
 import { useChipsStore } from "@/store/chipsStore";
-
-interface chipProp {
-  id: string;
-  quantity?: number;
-  price?: number;
-}
+import userSetItemInterface from "@/types/userSetItemInterface";
 
 export interface propsInterface {
-  chips: chipProp[];
+  chips: userSetItemInterface[];
   isBordered?: boolean;
 }
 
@@ -31,7 +26,8 @@ withDefaults(defineProps<propsInterface>(), {
 
 const chipsStore = useChipsStore();
 
-const getChip = (id) => chipsStore.chips.find((item) => item.id === id) ?? {};
+const getChip = (color: string) =>
+  chipsStore.chips.find((item) => item.id === color) ?? {};
 </script>
 
 <style lang="scss" scoped>
