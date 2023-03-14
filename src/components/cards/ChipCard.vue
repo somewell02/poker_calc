@@ -1,13 +1,22 @@
 <template>
-  <div :class="['chip-card', { bordered: isBordered }]">
+  <div :class="['chip-card', { bordered: isBordered, small: isSmall }]">
     <img :src="chip.imgUrl" :alt="chip.title" class="chip-card-img" />
     <div v-if="price || quantity" class="chip-card-options">
-      <div v-if="quantity" class="chip-card-option chip-card-quantity">
-        Количество: {{ quantity }}
-      </div>
-      <div v-if="price" class="chip-card-option chip-card-price">
-        Номинал: {{ price }} ₽
-      </div>
+      <template v-if="isSmall">
+        <div class="chip-card-option">
+          <template v-if="quantity">{{ quantity }}</template>
+          <template v-if="quantity && price">, </template>
+          <template v-if="price">{{ price }} ₽</template>
+        </div>
+      </template>
+      <template v-else>
+        <div v-if="quantity" class="chip-card-option chip-card-quantity">
+          Количество: {{ quantity }}
+        </div>
+        <div v-if="price" class="chip-card-option chip-card-price">
+          Номинал: {{ price }} ₽
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -19,6 +28,7 @@ export interface propsInterface {
   chip: chipInterface;
   quantity?: number;
   price?: number;
+  isSmall?: boolean;
   isBordered?: boolean;
 }
 
@@ -29,19 +39,21 @@ withDefaults(defineProps<propsInterface>(), {
 
 <style lang="scss" scoped>
 .chip-card {
-  &:not(.bordered) {
-    width: 183px;
-  }
+  width: fit-content;
 
   &.bordered {
-    width: 215px;
     padding: 20px 15px;
     @include bordered;
   }
 
-  .chip-card-img {
+  &:not(.small) .chip-card-img {
     width: 183px;
     height: 183px;
+  }
+
+  &.small .chip-card-img {
+    width: 56px;
+    height: 56px;
   }
 
   .chip-card-options {
@@ -49,12 +61,19 @@ withDefaults(defineProps<propsInterface>(), {
     flex-direction: column;
     align-items: center;
     row-gap: 5px;
-    margin-top: 10px;
 
     .chip-card-option {
       font-size: 14px;
       color: var(--text-color);
     }
+  }
+
+  &:not(.small) .chip-card-options {
+    margin-top: 10px;
+  }
+
+  &.small .chip-card-options {
+    margin-top: 5px;
   }
 }
 </style>

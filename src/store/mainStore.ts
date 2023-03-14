@@ -4,6 +4,8 @@ import { ref } from "vue";
 import { useChipsStore } from "@/store/chipsStore";
 import { useUserSetsStore } from "@/store/userSetsStore";
 
+type option = "chips" | "user-sets";
+
 export const useMainStore = defineStore("main-store", () => {
   const isLoading = ref<boolean>(true);
 
@@ -11,7 +13,7 @@ export const useMainStore = defineStore("main-store", () => {
     isLoading.value = loading;
   };
 
-  const initData = async (options: string[] = []): Promise<void> => {
+  const initData = async (options: option[] = []): Promise<void> => {
     isLoading.value = true;
 
     if (options.includes("chips")) {

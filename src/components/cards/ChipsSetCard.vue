@@ -1,11 +1,12 @@
 <template>
-  <div :class="['chips-set-card', { bordered: isBordered }]">
+  <div :class="['chips-set-card', { bordered: isBordered, small: isSmall }]">
     <chip-card
       v-for="chip in chips"
       :key="chip.color"
       :chip="getChip(chip.color)"
       :quantity="chip.quantity"
       :price="chip.price"
+      :is-small="isSmall"
     />
   </div>
 </template>
@@ -17,10 +18,12 @@ import userSetItemInterface from "@/types/userSetItemInterface";
 
 export interface propsInterface {
   chips: userSetItemInterface[];
+  isSmall?: boolean;
   isBordered?: boolean;
 }
 
 withDefaults(defineProps<propsInterface>(), {
+  isSmall: false,
   isBordered: false,
 });
 
@@ -32,11 +35,19 @@ const getChip = (color: string) =>
 
 <style lang="scss" scoped>
 .chips-set-card {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
   justify-content: center;
+
+  &:not(.small) {
+    width: 100%;
+    gap: 40px;
+  }
+
+  &.small {
+    width: fit-content;
+    gap: 20px;
+  }
 
   &.bordered {
     padding: 20px 15px;

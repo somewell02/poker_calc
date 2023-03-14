@@ -8,7 +8,11 @@
       />
     </div>
     <filled-button @click="click">Click</filled-button>
-    <chips-set-card :chips="userSetsStore.userSets[0].items" is-bordered />
+    <chips-set-card
+      :chips="userSetsStore.userSets[0].items"
+      is-bordered
+      is-small
+    />
     <message-alert ref="alert"></message-alert>
   </div>
 </template>

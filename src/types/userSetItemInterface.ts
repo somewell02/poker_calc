@@ -1,7 +1,7 @@
 interface userSetItemInterface {
   color: string;
-  quantity?: string;
-  price?: string;
+  quantity?: number;
+  price?: number;
 }
 
 export default userSetItemInterface;
