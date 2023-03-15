@@ -5,7 +5,7 @@
   --secondary-color: #bababa;
   --border-color: #dadada;
   --input-color: #dadada;
-  --text-color: #404040;
+  --text-color: #282828;
   --background-color: #F2F6F7;
   --background--text-color: #ffffff;
   --hover-color: #F9F9F9;
@@ -39,19 +39,27 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-color);
 }
 
+h1, h2 {
+  text-align: center;
+}
+
+h4 {
+  font-size: 18px;
+}
+
 a {
   text-decoration: none;
 }
 
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1120px;
   margin: 0 auto;
   @include media-xl {
     width: auto;
     margin: 0 40px;
   }
-  @include media-xs {
+  @include media-sm {
     margin: 0 20px;
   }
 }
@@ -59,10 +67,10 @@ a {
 .bordered-div {
   @include bordered;
   padding: 60px;
-  @include media-sm {
+  @include media-lg {
     padding: 60px 30px;
   }
-  @include media-xs {
+  @include media-sm {
     padding: 60px 20px;
   }
 }

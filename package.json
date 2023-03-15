@@ -13,7 +13,7 @@
     "firebase-tools": "^11.22.0",
     "maska": "^2.1.7",
     "pinia": "^2.0.30",
-    "vue": "^3.2.13",
+    "vue": "^3.2.45",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {

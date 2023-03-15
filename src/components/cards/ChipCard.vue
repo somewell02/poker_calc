@@ -47,8 +47,8 @@ withDefaults(defineProps<propsInterface>(), {
   }
 
   &:not(.small) .chip-card-img {
-    width: 183px;
-    height: 183px;
+    width: 153px;
+    height: 153px;
   }
 
   &.small .chip-card-img {
