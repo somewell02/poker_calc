@@ -1,6 +1,6 @@
 <template>
   <div class="home-wrap container">
-    <h1>Рассчитай номиналы фишек</h1>
+    <h1>Калькулятор номиналов фишек</h1>
 
     <form @submit.prevent="calculate" class="calculator-form">
       <div class="calculator-form-item">
@@ -18,6 +18,24 @@
           />
         </div>
       </div>
+      <div class="calculator-form-item">
+        <h4>Информация по игре</h4>
+        <div class="calculator-form-item-input calculator-form-info">
+          <number-input
+            v-model.number="calculatorStore.playersQuantity"
+            placeholder="Количество игроков"
+          />
+          <number-input
+            v-model.number="calculatorStore.budget"
+            placeholder="Бюджет"
+          />
+        </div>
+      </div>
+      <div class="calculator-form-item">
+        <filled-button class="calculator-form-submit-btn">
+          Рассчитать
+        </filled-button>
+      </div>
     </form>
 
     <message-alert ref="alert"></message-alert>
@@ -34,6 +52,8 @@ import { useCalculatorStore } from "@/store/calculatorStore";
 
 import { ref } from "vue";
 import userSetInterface from "@/types/userSetInterface";
+import NumberInput from "@/components/inputs/NumberInput.vue";
+import FilledButton from "@/components/buttons/FilledButton.vue";
 
 const mainStore = useMainStore();
 mainStore.initData(["chips", "user-sets"]);
@@ -50,7 +70,7 @@ const select = (set: userSetInterface): void => {
 };
 
 const calculate = () => {
-  console.log("calculate");
+  calculatorStore.calculate();
 };
 </script>
 
@@ -62,6 +82,10 @@ const calculate = () => {
     margin-top: 40px;
 
     .calculator-form-item {
+      &:not(:first-child) {
+        margin-top: 30px;
+      }
+
       .calculator-form-item-input {
         margin-top: 20px;
       }
@@ -74,6 +98,15 @@ const calculate = () => {
       .chips-set-card {
         cursor: pointer;
       }
+    }
+
+    .calculator-form-info {
+      display: flex;
+      gap: 20px;
+    }
+
+    .calculator-form-submit-btn {
+      width: 200px;
     }
   }
 }
