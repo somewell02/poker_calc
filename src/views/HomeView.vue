@@ -38,6 +38,15 @@
       </div>
     </form>
 
+    <div class="calculator-result-list">
+      <chips-set-card
+        v-for="(prices, idx) in calculatorStore.resultPrices"
+        :key="`prices-${idx}`"
+        :chips="prices.items"
+        class="calculator-result-item"
+        is-bordered
+      />
+    </div>
     <message-alert ref="alert"></message-alert>
   </div>
 </template>
@@ -107,6 +116,17 @@ const calculate = () => {
 
     .calculator-form-submit-btn {
       width: 200px;
+    }
+  }
+
+  .calculator-result-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 40px;
+
+    .calculator-result-item {
+      width: 100%;
     }
   }
 }
