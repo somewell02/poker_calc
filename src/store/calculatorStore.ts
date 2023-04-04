@@ -16,10 +16,10 @@ interface resultPrices {
 
 export const useCalculatorStore = defineStore("calculator-store", () => {
   const set = ref<userSetInterface | null>(null);
-  const playersQuantity = ref<number | null>(5);
-  const budget = ref<number | null>(500);
-  const minPrice = ref<number>(0);
-  const maxPrice = ref<number>(0);
+  const playersQuantity = ref<number | null>(null);
+  const budget = ref<number | null>(null);
+  const minPrice = ref<number | null>(null);
+  const maxPrice = ref<number | null>(null);
   const resultPrices = ref<resultPrices[]>([]);
 
   const selectSet = (newSet: userSetInterface): void => {
@@ -30,8 +30,8 @@ export const useCalculatorStore = defineStore("calculator-store", () => {
     set.value = null;
     playersQuantity.value = null;
     budget.value = null;
-    minPrice.value = 0;
-    maxPrice.value = 0;
+    minPrice.value = null;
+    maxPrice.value = null;
     resultPrices.value = [];
   };
 
@@ -58,7 +58,7 @@ export const useCalculatorStore = defineStore("calculator-store", () => {
       return {
         color: item.color,
         quantity: itemPerPerson,
-        price: minPrice.value,
+        price: minPrice.value ?? 0,
       };
     });
 
@@ -78,32 +78,37 @@ export const useCalculatorStore = defineStore("calculator-store", () => {
       });
     };
 
+    const pushChips = (): void => {
+      if (equalsBudget(chipsPerPerson)) {
+        resultPrices.value.push({
+          items: JSON.parse(JSON.stringify(chipsPerPerson)),
+          priority: 0,
+        });
+      }
+    };
+
     const incPrice = (minIdx: number, idx: number, maxIdx: number): void => {
       if (minIdx === idx) return;
 
       if (idx < maxIdx) {
-        if (chipsPerPerson[idx].price <= maxPrice.value - multiplicity) {
+        if (
+          maxPrice.value &&
+          chipsPerPerson[idx].price <= maxPrice.value - multiplicity
+        ) {
           chipsPerPerson[idx].price += multiplicity;
-          if (equalsBudget(chipsPerPerson)) {
-            resultPrices.value.push({
-              items: JSON.parse(JSON.stringify(chipsPerPerson)),
-              priority: 0,
-            });
-          }
+          pushChips();
           incPrice(minIdx, maxIdx, maxIdx);
         } else {
           resetPrices(idx);
           incPrice(minIdx, idx - 1, maxIdx);
         }
       } else if (idx === maxIdx) {
-        while (chipsPerPerson[idx].price <= maxPrice.value - multiplicity) {
+        while (
+          maxPrice.value &&
+          chipsPerPerson[idx].price <= maxPrice.value - multiplicity
+        ) {
           chipsPerPerson[idx].price += multiplicity;
-          if (equalsBudget(chipsPerPerson)) {
-            resultPrices.value.push({
-              items: JSON.parse(JSON.stringify(chipsPerPerson)),
-              priority: 0,
-            });
-          }
+          pushChips();
         }
 
         resetPrices(idx);
@@ -118,6 +123,7 @@ export const useCalculatorStore = defineStore("calculator-store", () => {
     resultPrices.value = resultPrices.value.map((item) => {
       const uniqueLength = new Set(item.items.map((chip) => chip.price)).size;
       const priority = item.items.length - uniqueLength;
+
       return {
         items: item.items,
         priority,
@@ -129,8 +135,10 @@ export const useCalculatorStore = defineStore("calculator-store", () => {
       .sort((item1, item2) => {
         const itemPrices1 = item1.items.map((item) => item.price);
         const itemDiff1 = Math.max(...itemPrices1) - Math.min(...itemPrices1);
+
         const itemPrices2 = item2.items.map((item) => item.price);
         const itemDiff2 = Math.max(...itemPrices2) - Math.min(...itemPrices2);
+
         return itemDiff2 - itemDiff1;
       });
   };
@@ -139,6 +147,8 @@ export const useCalculatorStore = defineStore("calculator-store", () => {
     set,
     playersQuantity,
     budget,
+    minPrice,
+    maxPrice,
     resultPrices,
     selectSet,
     reset,
