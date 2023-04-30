@@ -1,5 +1,5 @@
 export const config = {
-  apiKey: "AIzaSyBDTwlfeJztIYQEBZl8msFVxNUU8nF-wXY",
+  apiKey: process.env.VUE_APP_API_KEY,
   authDomain: "pokercalc-4e317.firebaseapp.com",
   projectId: "pokercalc-4e317",
   storageBucket: "pokercalc-4e317.appspot.com",
